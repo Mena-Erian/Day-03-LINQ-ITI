@@ -256,13 +256,15 @@ namespace Demo
         }
 
         public static void Print<T>(this T value) => Console.WriteLine(value);
+        public static void Print<T>(this T value, string addToTheEnd) => Console.WriteLine(value + addToTheEnd);
         public static void Print<T>(this IEnumerable<T> values) where T : IEnumerable
         {
             foreach (T item in values) Console.WriteLine(item);
         }
-        public static void PrintAll<T>(this ICollection<T> values)
+        public static void PrintAll<T>(this ICollection<T> values, string? addToTheEnd = null)
         {
             foreach (T item in values) Console.WriteLine(item);
+            if (addToTheEnd is not null) Console.WriteLine(addToTheEnd);
         }
         public static void PrintAll<T>(this ICollection values)
         {
@@ -284,7 +286,8 @@ namespace Demo
             {
                 foreach (var item in chunk) Console.WriteLine(item);
                 Console.WriteLine("-------------------------");
-            };
+            }
+            ;
         }
         public static void PrintAll<TKay, TElement>(this ILookup<TKay, TElement> values)
         {
