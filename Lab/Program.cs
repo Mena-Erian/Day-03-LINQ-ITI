@@ -12,12 +12,12 @@ namespace Lab
             var strConnection = new ConfigurationBuilder().AddJsonFile("appsetting.json").Build()
                                 .GetSection("connection1").Value;
             Department.GetDepartments(strConnection ?? "").PrintAll();
-            Department.InsertDepartment(new Department("Backend Enginnering",
-                                                                54,
-                                                                DateOnly.Parse("10/20/2022")),
-                                        strConnection!).Print("  <<< ExecuteScalar()");
-            "=======================================After Updated===========================================".Print();
-            Department.GetDepartments(strConnection ?? "").PrintAll();
+            /// Department.InsertDepartment(new Department("Backend Enginnering",
+            ///                                                     54,
+            ///                                                     DateOnly.Parse("10/20/2022")),
+            ///                             strConnection!).Print("  <<< ExecuteScalar()");
+            /// "=======================================After Updated===========================================".Print();
+            /// Department.GetDepartments(strConnection ?? "").PrintAll();
 
             Console.ReadLine();
         }

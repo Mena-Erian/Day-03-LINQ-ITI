@@ -159,7 +159,8 @@ namespace Demo
             SqlConnection sqlConnection = new SqlConnection(connectionString);
             SqlCommand sqlCommand = new SqlCommand(
                 //"insert into Project (Pname,Pnumber,Plocation,City,Dnum) values ('ISchool',800,'Eltagamo3','Alex',30)",
-                "insert into Project (Pname,Pnumber,Plocation,City,Dnum) values (@pName,@pNumber,@pLocation,@pCity,@dNumber)",
+                "insert into Project (Pname,Pnumber,Plocation,City,Dnum) values (" +
+                "@pName,@pNumber,@pLocation,@pCity,@dNumber)",
                 sqlConnection);
             // use when insert update delete
 

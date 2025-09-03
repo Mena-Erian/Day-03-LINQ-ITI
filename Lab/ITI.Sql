@@ -78,4 +78,17 @@ VALUES ('Mena Youssef', 500, 4500.00, 'Cairo', 100, @DeptId);
 
 commit;
 
-Go
+
+GO
+
+Create Or Alter Procedure SpUpdateDepartmenById
+(@Id int, @NewName nVarChar(20), @NewInstId int,@NewHiringDate Date = NULL)
+As
+Begin
+	If @NewHiringDate is Null 
+		SET @NewHiringDate = Cast(GetDate() As Date);
+
+	Update Department 
+	SET name = @NewName,insId = @NewInstId,hiringDate = @NewHiringDate
+	Where id = @Id;
+End
