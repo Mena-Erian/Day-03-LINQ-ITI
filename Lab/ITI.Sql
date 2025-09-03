@@ -103,3 +103,5 @@ Create Or Alter Procedure Sp_DeleteDepartmentById @id int
 As
 	Delete From Departments
 	where id = @id;
+
+Execute Sp_DeleteDepartmentById 15

@@ -39,7 +39,15 @@ namespace Lab
             /// });
             #endregion
 
-            "=======================================After Updating===========================================".Print();
+            #region Delete
+            /// ConnectionHelpr.ConnectThenDisconnect(sqlConnection, () =>
+            /// {
+            ///     Department.DeleteDepartment(16, sqlConnection);
+            /// });
+            #endregion
+
+
+            "=======================================After Edit===========================================".Print();
             Department.GetDepartments(strConnection ?? "").PrintAll();
 
             Console.ReadLine();

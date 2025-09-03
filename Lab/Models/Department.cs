@@ -80,6 +80,11 @@ namespace Lab.Models
                                                     ));
             cmd.ExecuteNonQuery();
         }
+        public static void DeleteDepartment(int deptId,SqlConnection connection)
+        {
+            SqlCommand cmd = new SqlCommand($"Execute Sp_DeleteDepartmentById {deptId}",connection);
+            cmd.ExecuteNonQuery();
+        }
         public override string ToString()
             => $"Department Id: {Id}, Name: {Name}, Instructor Id: {InsId}, Hiring Date {HiringDate}";
     }
