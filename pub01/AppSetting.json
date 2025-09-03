@@ -1,0 +1,3 @@
+﻿{
+  "connection1": "Server=.;Database=MyCompany;integrated security=true;trustservercertificate=true;"
+}
