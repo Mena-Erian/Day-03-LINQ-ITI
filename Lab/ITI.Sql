@@ -81,14 +81,17 @@ commit;
 
 GO
 
-Create Or Alter Procedure SpUpdateDepartmenById
+Create Or Alter Procedure Sp_UpdateDepartmenById
 (@Id int, @NewName nVarChar(20), @NewInstId int,@NewHiringDate Date = NULL)
 As
 Begin
 	If @NewHiringDate is Null 
 		SET @NewHiringDate = Cast(GetDate() As Date);
 
-	Update Department 
+	Update Departments 
 	SET name = @NewName,insId = @NewInstId,hiringDate = @NewHiringDate
 	Where id = @Id;
 End
+
+
+Execute Sp_UpdateDepartmenById 14,'Markting',4

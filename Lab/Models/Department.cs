@@ -2,12 +2,13 @@
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
-using System.Data;
-
+//using Lab;
 
 namespace Lab.Models
 {
@@ -51,27 +52,33 @@ namespace Lab.Models
             }
             return departments;
         }
-        public static int InsertDepartment(Department department, string strConnection)
+        public static int InsertDepartment(Department department, SqlConnection connection)
         {
-            SqlConnection connection = new SqlConnection(strConnection);
             SqlCommand command = new SqlCommand(@"Insert into Departments (name,insId,hiringDate)
                                                          Values (@DpName,@InstructorId ,@HiringDate)
                                                          SELECT SCOPE_IDENTITY();", connection);
 
-            SqlParameter p1Name = new SqlParameter() { ParameterName = "@DpName", Value = department.Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input };
-            SqlParameter p2InsId = new SqlParameter() { ParameterName = "@InstructorId", Value = department.InsId, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input };
-            SqlParameter p3HiringDate = new SqlParameter() { ParameterName = "@HiringDate", Value = (DateOnly)department.HiringDate, SqlDbType = SqlDbType.Date, Direction = ParameterDirection.Input };
-
-            command.Parameters.AddRange([p1Name, p2InsId, p3HiringDate]);
-
+            command.Parameters.AddRange(
+                ConnectionHelpr.GetParameters(department,
+                   new DepartmentInputData("@DpName",
+                   "@InstructorId",
+                   "@HiringDate"))
+                );
             int identity = -1;
-            ConnectionHelpr.ConnectThenDisconnect(connection, () =>
-            {
 
-                identity = Convert.ToInt32(command.ExecuteScalar());
-            });
+            identity = Convert.ToInt32(command.ExecuteScalar());
+
 
             return identity;
+        }
+        public static void UpdateDepartment(Department newDepartment, int idOfDepartmentUpdate, SqlConnection connection)
+        {
+            SqlCommand cmd = new SqlCommand($"Execute Sp_UpdateDepartmenById {idOfDepartmentUpdate},@DpName,@InstructorId,@HiringDate", connection);
+
+            cmd.Parameters.AddRange(ConnectionHelpr.GetParameters(newDepartment,
+                              new DepartmentInputData("@DpName", "@InstructorId", "@HiringDate")
+                                                    ));
+            cmd.ExecuteNonQuery();
         }
         public override string ToString()
             => $"Department Id: {Id}, Name: {Name}, Instructor Id: {InsId}, Hiring Date {HiringDate}";
