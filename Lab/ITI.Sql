@@ -93,5 +93,13 @@ Begin
 	Where id = @Id;
 End
 
-
+GO
 Execute Sp_UpdateDepartmenById 14,'Markting',4
+
+Go 
+
+
+Create Or Alter Procedure Sp_DeleteDepartmentById @id int
+As
+	Delete From Departments
+	where id = @id;
