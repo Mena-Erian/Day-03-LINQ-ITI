@@ -105,3 +105,8 @@ As
 	where id = @id;
 
 Execute Sp_DeleteDepartmentById 15
+
+
+
+Select *
+from Students;
