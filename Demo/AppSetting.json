@@ -1,0 +1,3 @@
+﻿{
+  "connection1": "Server=.;Database=ITIAdoLab;integrated security=true;trustservercertificate=true;"
+}

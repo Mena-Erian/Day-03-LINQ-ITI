@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using HelperUtilities;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 
@@ -7,14 +8,14 @@ namespace Demo
     #region Lab
     // Create Db
     // Make CRUD Operations
-    /// <connected mode>
+    /// <connected mode> => sqlconnection, sqlcommand,
     /// Read Department
     /// insert (text, Identity)
     /// Update (stored Procedure)
     /// Delete (stored Procedure)
     /// </connected mode>
 
-    /// Student work with disconnected mode
+    /// Student work with disconnected mode => sqlConnection, sqlcommand, sqldataadapter
 
     //Make Class for student
     //List<Studnet>
@@ -158,7 +159,8 @@ namespace Demo
             SqlConnection sqlConnection = new SqlConnection(connectionString);
             SqlCommand sqlCommand = new SqlCommand(
                 //"insert into Project (Pname,Pnumber,Plocation,City,Dnum) values ('ISchool',800,'Eltagamo3','Alex',30)",
-                "insert into Project (Pname,Pnumber,Plocation,City,Dnum) values (@pName,@pNumber,@pLocation,@pCity,@dNumber)",
+                "insert into Project (Pname,Pnumber,Plocation,City,Dnum) values (" +
+                "@pName,@pNumber,@pLocation,@pCity,@dNumber)",
                 sqlConnection);
             // use when insert update delete
 
