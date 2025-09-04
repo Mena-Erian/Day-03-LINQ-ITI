@@ -108,5 +108,15 @@ Execute Sp_DeleteDepartmentById 15
 
 
 
+
 Select *
 from Students;
+
+GO
+
+Create Or Alter Procedure Sp_InsertStudent 
+(@fName nVarChar(20), @lName nVarChar(20),@age int,@address nvarchar(50) = NULL, @DeptId int)
+As
+	Insert into Students
+	Values (@fName,@lName,@age,@address,@DeptId);
+GO

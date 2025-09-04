@@ -11,6 +11,9 @@ namespace Lab.Models
 {
     internal class Student
     {
+        private string fName;
+        private string lName;
+
         private Student(int id, string fName, string lName, int age, string? address, int deptId)
         {
             Id = id;
@@ -29,13 +32,32 @@ namespace Lab.Models
             Address = address;
             DeptId = deptId;
         }
-        public Student()
-        {
-
-        }
+        public Student() { }
         public int Id { get; set; }
-        public string FName { get; set; }
-        public string LName { get; set; }
+        public string FName
+        {
+            get => fName;
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    fName = char.ToUpper(value[0]) + value.Substring(1);
+                }
+                fName = value;
+            }
+        }
+        public string LName
+        {
+            get => lName;
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    lName = char.ToUpper(value[0]) + value.Substring(1);
+                }
+                lName = value;
+            }
+        }
         public int Age { get; set; }
         public string? Address { get; set; }
         public int DeptId { get; set; }
@@ -51,21 +73,36 @@ namespace Lab.Models
             DataTable dataTable = new DataTable();
             adapter.Fill(dataTable);
 
-            dataTable.PrintAll();
-            "-----------====-------------------------------------------".Print();
             foreach (DataRow item in dataTable.Rows)
             {
                 students.Add(new Student(
                              Convert.ToInt32(item.ItemArray[0]),
-                             item.ItemArray[1] == DBNull.Value ? string.Empty : item.ItemArray[1].ToString(),
-                             item.ItemArray[2] == DBNull.Value ? string.Empty : item.ItemArray[2].ToString(),
+                             item.ItemArray[1] == DBNull.Value ? string.Empty : item.ItemArray[1]?.ToString()!,
+                             item.ItemArray[2] == DBNull.Value ? string.Empty : item.ItemArray[2]?.ToString()!,
                              Convert.ToInt32(item.ItemArray[3]),
-                             item.ItemArray[4] == DBNull.Value ? null : item.ItemArray[4].ToString(),
+                             item.ItemArray[4] == DBNull.Value ? null : item.ItemArray[4]?.ToString()!,
                              Convert.ToInt32(item.ItemArray[5])
                                               ));
             }
             return students;
+        }
 
+        public static int InsertStudent(Student student, SqlConnection connection)
+        {
+            SqlCommand cmd =
+                new SqlCommand($"Execute Sp_InsertStudent @fName, @lName, @age, @DeptId, @address", connection);
+
+            cmd.Parameters.AddRange(ConnectionHelpr.GetParameters(student,
+                        new StudentInputData("@fName", "@lName",
+                                 "@age", "@DeptId", "@address")));
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            SqlCommandBuilder sqlCommandBuilder = new SqlCommandBuilder(adapter);
+
+            DataTable dataTable = new DataTable();
+            adapter.Fill(dataTable);
+
+            return Convert.ToInt32(dataTable.Rows[0].ItemArray[0]);
         }
 
         public override string ToString()
