@@ -23,7 +23,7 @@ namespace Lab.Models
             Address = address;
             DeptId = deptId;
         }
-        public Student(string fName, string lName, int age, string? address, int deptId)
+        public Student(string fName, string lName, int age, int deptId, string? address = default)
         {
             //Id = id;
             FName = fName;
@@ -103,10 +103,32 @@ namespace Lab.Models
 
             return Convert.ToInt32(dataTable.Rows[0].ItemArray[0]);
         }
-        public static void UpdateStudentById(Student newStudent,int IdOfStudentUpdate,SqlConnection connection)
-        {
-            //SqlCommand cmd = new 
- 
+        public static void UpdateStudentById(int IdOfStudentUpdate, Student newStudent, SqlConnection connection)
+        { 
+            SqlDataAdapter adapter = new SqlDataAdapter(new SqlCommand("select * From Students", connection));
+            SqlCommandBuilder sqlCommandBuilder = new SqlCommandBuilder(adapter);
+            adapter.UpdateCommand = sqlCommandBuilder.GetUpdateCommand();
+
+            DataTable dataTable = new DataTable();
+            adapter.Fill(dataTable);
+
+            DataRow[] dataRows = dataTable.Select($"id = {IdOfStudentUpdate}");
+
+            if (dataRows.Length > 0)
+            {
+                dataRows[0]["fName"] = newStudent.fName;
+                dataRows[0]["lName"] = newStudent.lName;
+                dataRows[0]["age"] = newStudent.Age;
+                dataRows[0]["deptId"] = newStudent.DeptId;
+                dataRows[0]["address"] = newStudent.Address;
+                adapter.Update(dataTable);
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"USER OF ID {IdOfStudentUpdate} IS NOT FOUNDED!!");
+                Console.ResetColor();
+            }
         }
 
         public override string ToString()

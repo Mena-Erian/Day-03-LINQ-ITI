@@ -17,28 +17,27 @@ namespace Lab
 
 
             #region Student CRUD Operations With DisConnected MODE
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Student.GetStudents(sqlConnection).PrintAll();
-
+            Console.ResetColor();
 
             #region Update Student
-
-
-
+            Student.UpdateStudentById(24,
+                new Student("Mo3az", "Esmaeal", 12, 12, "ELCOPA")
+                , sqlConnection);
             #endregion
 
             #region Insert Or Create Students
             //Department.GetDepartments(strConnection).PrintAll() ;
-            //Student.InsertStudent(new Student("Hosam", "Mohamad", 14, "ElKhosuse", 1), sqlConnection).Print("  <<< Idintity");
+            //Student.InsertStudent(new Student("Hosam", "Mohamad", 14, 1, "ElKhosuse"), sqlConnection).Print("  <<< Idintity");
             #endregion
 
             #region Get Or Read Students
             //Student.GetStudents(sqlConnection).PrintAll();
             #endregion
-            
-            "===========================After Edit And Update===========================".Print();
-            Student.GetStudents(sqlConnection).PrintAll();
 
+            "===========================After Edit And Update===========================".Print();
+            Student.GetStudents(sqlConnection).PrintAll(color: ConsoleColor.DarkYellow);
             #endregion
             /// SqlDataAdapter adapter = new SqlDataAdapter(getAllDepartmentCmd);
             /// SqlCommandBuilder updateBuilder = new SqlCommandBuilder(adapter);
