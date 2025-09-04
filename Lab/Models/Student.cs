@@ -86,25 +86,36 @@ namespace Lab.Models
             }
             return students;
         }
-        public static int InsertStudent(Student student, SqlConnection connection)
+        public static void InsertStudent(Student student, SqlConnection connection)
         {
-            SqlCommand cmd =
-                new SqlCommand($"Execute Sp_InsertStudent @fName, @lName, @age, @DeptId, @address", connection);
-
-            cmd.Parameters.AddRange(ConnectionHelpr.GetParameters(student,
-                        new StudentInputData("@fName", "@lName",
-                                 "@age", "@DeptId", "@address")));
-
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            SqlDataAdapter adapter = new SqlDataAdapter(new SqlCommand("select * From Students", connection));
             SqlCommandBuilder sqlCommandBuilder = new SqlCommandBuilder(adapter);
+            adapter.UpdateCommand = sqlCommandBuilder.GetInsertCommand();
+            // Modify InsertCommand to return the new Id
+            //adapter.InsertCommand.CommandText.Concat("; SELECT CAST(SCOPE_IDENTITY() AS int);"); // this line throw
 
             DataTable dataTable = new DataTable();
             adapter.Fill(dataTable);
 
-            return Convert.ToInt32(dataTable.Rows[0].ItemArray[0]);
+            DataRow dr = dataTable.NewRow();
+
+            dr["fName"] = student.fName;
+            dr["lName"] = student.lName;
+            dr["age"] = student.Age;
+            dr["deptId"] = student.DeptId;
+            dr["address"] = student.Address;
+            dr.ItemArray.PrintAll(color: ConsoleColor.Blue);
+
+            dataTable.Rows.Add(dr);
+
+            adapter.Update(dataTable);
+            //connection.Open();
+            //object result = adapter.InsertCommand.ExecuteScalar();
+            //connection.Close();
+            //return Convert.ToInt32(result);
         }
         public static void UpdateStudentById(int IdOfStudentUpdate, Student newStudent, SqlConnection connection)
-        { 
+        {
             SqlDataAdapter adapter = new SqlDataAdapter(new SqlCommand("select * From Students", connection));
             SqlCommandBuilder sqlCommandBuilder = new SqlCommandBuilder(adapter);
             adapter.UpdateCommand = sqlCommandBuilder.GetUpdateCommand();
