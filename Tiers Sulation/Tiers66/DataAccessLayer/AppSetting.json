@@ -1,0 +1,4 @@
+﻿{
+  "connection1": "Server=.;Database=AdventureWorks2012_a;integrated security=true;trustservercertificate=true;",
+  "connection2": "Server=.;Database=ITIAdoLab;integrated security=true;trustservercertificate=true;"
+}
