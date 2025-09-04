@@ -2,6 +2,7 @@
 using Lab.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 
 namespace Lab
 {
@@ -15,9 +16,33 @@ namespace Lab
             sqlConnection = new SqlConnection(strConnection);
 
 
+            #region Student CRUD Operations With DisConnected MODE
+            Console.ForegroundColor = ConsoleColor.Green;
+            Student.GetStudents(sqlConnection).PrintAll();
+            Console.ResetColor();
 
-            Department.GetDepartments(strConnection ?? "").PrintAll();
+            #region Update Student
+            /// Student.UpdateStudentById(24,
+            ///     new Student("Mo3az", "Esmaeal", 12, 12, "ELCOPA")
+            ///     , sqlConnection);
+            #endregion
 
+            #region Insert Or Create Students
+            //Department.GetDepartments(strConnection).PrintAll() ;
+            Student.InsertStudent(new Student("Hosam", "Mohamad", 14, 1, "ElKhosuse"), sqlConnection);
+            #endregion
+
+            #region Get Or Read Students
+            //Student.GetStudents(sqlConnection).PrintAll();
+            #endregion
+
+            "===========================After Edit And Update===========================".Print();
+            Student.GetStudents(sqlConnection).PrintAll(color: ConsoleColor.DarkYellow);
+            #endregion
+             
+
+            #region Department CRUD Operation With Connected MODE
+            //Department.GetDepartments(strConnection ?? "").PrintAll();
 
             #region Inserting
             /// ConnectionHelpr.ConnectThenDisconnect(sqlConnection, () =>
@@ -47,8 +72,9 @@ namespace Lab
             #endregion
 
 
-            "=======================================After Edit===========================================".Print();
-            Department.GetDepartments(strConnection ?? "").PrintAll();
+            //"=======================================After Edit===========================================".Print();
+            //Department.GetDepartments(strConnection ?? "").PrintAll(); 
+            #endregion
 
             Console.ReadLine();
         }

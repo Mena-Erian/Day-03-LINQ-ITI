@@ -105,3 +105,43 @@ As
 	where id = @id;
 
 Execute Sp_DeleteDepartmentById 15
+
+
+
+
+Select *
+from Students;
+
+GO
+
+Create Or Alter Procedure Sp_InsertStudent 
+(@fName nVarChar(20), @lName nVarChar(20),@age int, @DeptId int,@address nvarchar(50) = NULL)
+As
+Begin
+	Insert into Students
+	Values (@fName,@lName,@age,@address,@DeptId);
+
+	select SCOPE_IDENTITY();
+End
+GO
+
+Execute Sp_InsertStudent 'kareem','Mohammad',20,1;
+
+GO
+
+Create Or Alter Procedure Sp_UpdateStudentById 
+( @Id int, @NewFName nVarChar(20),@NewLName nVarChar(20), @NewAge int,@NewDeptId int ,@NewAddress nvarchar(50))
+As
+	Update Students
+	Set fName = @NewFName, lName = @NewLName,
+	age =@NewAge, deptId = @NewDeptId,
+	address = @NewAddress
+	where id = @Id;
+
+GO
+
+Exec Sp_UpdateStudentById 17,'Jhon','Hany',19,2,'Alex';
+
+--select * from Departments
+--select * from Students
+
