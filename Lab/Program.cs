@@ -15,17 +15,31 @@ namespace Lab
                                 .GetSection("connection1").Value;
             sqlConnection = new SqlConnection(strConnection);
 
-            #region Student CRUD Operation With DisConnected MODE
+
+            #region Student CRUD Operations With DisConnected MODE
+
+            Student.GetStudents(sqlConnection).PrintAll();
 
 
-            Student.GetStudents(sqlConnection).PrintAll() ;
-
-
-            //SqlCommand getAllDepartmentCmd = new SqlCommand("select * from Departments", sqlConnection);
+            #region Update Student
 
 
 
+            #endregion
 
+            #region Insert Or Create Students
+            //Department.GetDepartments(strConnection).PrintAll() ;
+            //Student.InsertStudent(new Student("Hosam", "Mohamad", 14, "ElKhosuse", 1), sqlConnection).Print("  <<< Idintity");
+            #endregion
+
+            #region Get Or Read Students
+            //Student.GetStudents(sqlConnection).PrintAll();
+            #endregion
+            
+            "===========================After Edit And Update===========================".Print();
+            Student.GetStudents(sqlConnection).PrintAll();
+
+            #endregion
             /// SqlDataAdapter adapter = new SqlDataAdapter(getAllDepartmentCmd);
             /// SqlCommandBuilder updateBuilder = new SqlCommandBuilder(adapter);
             /// adapter.UpdateCommand = updateBuilder.GetUpdateCommand();
@@ -72,8 +86,6 @@ namespace Lab
             ///     dataRow.RowState.Print();
             ///     "-------------------------------*".Print();
             /// }
-
-            #endregion
 
             #region Department CRUD Operation With Connected MODE
             //Department.GetDepartments(strConnection ?? "").PrintAll();

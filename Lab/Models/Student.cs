@@ -86,7 +86,6 @@ namespace Lab.Models
             }
             return students;
         }
-
         public static int InsertStudent(Student student, SqlConnection connection)
         {
             SqlCommand cmd =
@@ -103,6 +102,11 @@ namespace Lab.Models
             adapter.Fill(dataTable);
 
             return Convert.ToInt32(dataTable.Rows[0].ItemArray[0]);
+        }
+        public static void UpdateStudentById(Student newStudent,int IdOfStudentUpdate,SqlConnection connection)
+        {
+            //SqlCommand cmd = new 
+ 
         }
 
         public override string ToString()
